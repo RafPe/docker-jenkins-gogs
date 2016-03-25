@@ -9,8 +9,7 @@ services:
        volumes:
           - /vol/appdata/services/devops/gogs:/data
        restart: always
-       depends_on:
-         - mariadb
+       depends_on: mariadb
        logging:
         driver: json-file
         options:
@@ -21,7 +20,7 @@ services:
   mariadb:
        image: mariadb:latest
        environment:
-         - MYSQL_ROOT_PASSWORD=JakiesNajbardziejSoczysiarskieHasloniu123
+         - MYSQL_ROOT_PASSWORD=SwitasneHumoyrstyczniewielkie812
          - MYSQL_DATABASE=gogs
        volumes:
          - /vol/appdata/services/devops/mariadb:/var/lib/mysql
@@ -33,8 +32,8 @@ services:
           max-file: "3"
           labels: "mariadb"
 
-  elasticsearch:
-       image: elasticsearch:2
+  jenkins:
+       image: jenkins
        volumes:
           - /vol/appdata/services/devops/jenkins:/var/jenkins_home
        ports:
