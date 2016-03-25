@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  gogs:
+       image: gogs/gogs
+       ports:
+          - "10022:22"
+          - "10080:3000"
+       volumes:
+          - /vol/appdata/services/devops/gogs:/data
+       restart: always
+       depends_on:
+         - mariadb
+       logging:
+        driver: json-file
+        options:
+          max-size: "100m"
+          max-file: "3"
+          labels: "gogs"
+
+  mariadb:
+       image: mariadb:latest
+       environment:
+         - MYSQL_ROOT_PASSWORD=JakiesNajbardziejSoczysiarskieHasloniu123
+         - MYSQL_DATABASE=gogs
+       volumes:
+         - /vol/appdata/services/devops/mariadb:/var/lib/mysql
+       restart: always
+       logging:
+        driver: json-file
+        options:
+          max-size: "100m"
+          max-file: "3"
+          labels: "mariadb"
+
+  elasticsearch:
+       image: elasticsearch:2
+       volumes:
+          - /vol/appdata/services/devops/jenkins:/var/jenkins_home
+       ports:
+          - "8080:8080"
+          - "50000:50000"
+       restart: always
+       logging:
+         driver: json-file
+         options:
+           max-size: "100m"
+           max-file: "3"
+           labels: "jenkins"
